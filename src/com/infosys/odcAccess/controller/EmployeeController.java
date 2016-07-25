@@ -39,19 +39,7 @@ public class EmployeeController {
 	
 	private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
-	@RequestMapping(value = "/employees", method = RequestMethod.GET)
-	public List<Employee> getEmployeesJson() {
-		log.debug("Entered into EmployeesJson");
-		List<Employee> employees = employeeService.findAllEmployees();
-		return employees;
-	}
 	
-	@RequestMapping(value = "/employee/{idOrName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Employee> getEmployeesJson(@RequestParam(value = "idOrName", required = true) String idOrName) {
-		List<Employee> employeeList = employeeService.findByIdOrName(idOrName);
-		ArrayList<Employee> employees = new ArrayList<Employee>();
-		return employees;
-	}
 	/*
 	@RequestMapping(value = "/listEmployee", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -109,6 +97,19 @@ public class EmployeeController {
 	}
 	
 	*/
+	@RequestMapping(value = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Employee> getEmployeesJson() {
+		log.debug("Entered into EmployeesJson");
+		List<Employee> employees = employeeService.findAllEmployees();
+		return employees;
+	}
+	
+	@RequestMapping(value = "/employee/{idOrName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Employee> getEmployeesJson(@RequestParam(value = "idOrName", required = true) String idOrName) {
+		List<Employee> employeeList = employeeService.findByIdOrName(idOrName);
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		return employees;
+	}
 	
 	@RequestMapping(value = "/employee/{id}", method = RequestMethod.POST)
 	public ResponseEntity<Void> add(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
@@ -143,7 +144,7 @@ public class EmployeeController {
 		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
 		HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(employee.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.ACCEPTED);
+        return new ResponseEntity<Void>(headers, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/employee/{id}", method = RequestMethod.DELETE)
@@ -159,7 +160,7 @@ public class EmployeeController {
 		}
 		
 		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	/*
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
