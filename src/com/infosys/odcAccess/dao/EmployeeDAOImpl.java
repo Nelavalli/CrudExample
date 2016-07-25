@@ -8,15 +8,20 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.infosys.odcAccess.controller.EmployeeController;
 import com.infosys.odcAccess.dto.Employee;
 
+@Repository
 @Transactional
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
+	private static final Logger log = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 	 private SessionFactory sessionFactory;
 	 
 	    public EmployeeDAOImpl(SessionFactory sessionFactory) {
@@ -52,7 +57,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override 
-	public Employee get(Long id) {
+	public Employee getById(Long id) {
 		Session session = sessionFactory.getCurrentSession();
 		Employee item=null;
 		try {
@@ -68,7 +73,31 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override 
-	public List<Employee> get(String idOrName, int firstPage, int lastPage) {
+	public List<Employee> getByName(String name, int firstResult, int maxResults) {
+		Session session = sessionFactory.getCurrentSession();
+		Employee item=null;
+		List<Employee> employees = null;
+		try {
+			log.debug("calling getByName procedure");
+			session.beginTransaction();
+			Query query = session.createQuery("from Employee where ID=:idOrName "
+					+ "or FIRSTNAME||MIDDLENAME||LASTNAME like '%:name%' ");
+			
+			query.setParameter("name", name);
+			if (firstResult != -1) query.setFirstResult(firstResult);  
+			if (maxResults != -1) query.setMaxResults(maxResults); 
+		    employees =query.setParameter("idOrName", name).list();
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		session.getTransaction().commit();
+		return employees;
+	}
+	
+	@Override 
+	public List<Employee> get(String idOrName, int firstResult, int maxResults) {
 		Session session = sessionFactory.getCurrentSession();
 		Employee item=null;
 		List<Employee> employees = null;
@@ -80,13 +109,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					+ "or FIRSTNAME||MIDDLENAME||LASTNAME like '%:idOrName%' ");
 			
 			query.setParameter("idOrName", idOrName);
-			if (firstPage != -1) query.setFirstResult(firstPage);  
-			if (lastPage != -1) query.setMaxResults(lastPage); 
+			if (firstResult != -1) query.setFirstResult(firstResult);  
+			if (maxResults != -1) query.setMaxResults(maxResults); 
 		    employees =query.setParameter("idOrName", idOrName).list();
 		    
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
 		} catch (Exception e) {
 			e.printStackTrace();	
 			session.getTransaction().rollback();
@@ -108,7 +134,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override 
-	public List<Employee> list(int firstPage, int lastPage) {
+	public List<Employee> list(int firstResult, int maxResults) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
@@ -117,11 +143,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			System.out.println("IN LIST");
 			
 			Query query = session.createQuery("from Employee");
-			if (firstPage != -1) query.setFirstResult(firstPage);  
-			if (lastPage != -1) query.setMaxResults(lastPage); 
+			if (firstResult != -1) query.setFirstResult(firstResult);  
+			if (maxResults != -1) query.setMaxResults(maxResults); 
 			items = (List<Employee>)query.list();
 			
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
