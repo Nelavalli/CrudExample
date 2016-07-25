@@ -42,17 +42,17 @@ public class EmployeeController {
 	@RequestMapping(value = "/employees", method = RequestMethod.GET)
 	public List<Employee> getEmployeesJson() {
 		log.debug("Entered into EmployeesJson");
-		List<Employee> employees = employeeDAO.list(-1, -1);
+		List<Employee> employees = employeeService.findAllEmployees();
 		return employees;
 	}
 	
 	@RequestMapping(value = "/employee/{idOrName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Employee> getEmployeesJson(@RequestParam(value = "idOrName", required = true) String idOrName) {
-		List<Employee> employeeList = employeeDAO.get(idOrName,-1, -1);
+		List<Employee> employeeList = employeeService.findByIdOrName(idOrName);
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		return employees;
 	}
-	
+	/*
 	@RequestMapping(value = "/listEmployee", method = RequestMethod.GET)
 	public ModelAndView list() {
 		System.out.println("We are in list block");
@@ -61,7 +61,7 @@ public class EmployeeController {
 		model.addObject("employeeList", employeeList);
 		return model;
 	}
-
+	
 	@RequestMapping(value = "/addEmployee", method = RequestMethod.GET)
 	public ModelAndView add() {
 		log.debug("Entered into add");	
@@ -71,7 +71,7 @@ public class EmployeeController {
 		model.addObject("employeeList", employeeList);
 		return model;
 	}
-
+	
 	@RequestMapping(value = "/editEmployee", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "id", required = true) Long id) {
 		System.out.println("Id= " + id);
@@ -108,11 +108,13 @@ public class EmployeeController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/employee/add", method = RequestMethod.POST)
+	*/
+	
+	@RequestMapping(value = "/employee/{id}", method = RequestMethod.POST)
 	public ResponseEntity<Void> add(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
 		log.info("Input employee object: "+employee);
 		if (null != employee) {			
-			employeeDAO.add(employee);
+			employeeService.add(employee);
 		} else {
 			//if (userService.isUserExist(user)) {
 	           // System.out.println("A User with name " + user.getName() + " already exist");
@@ -125,7 +127,41 @@ public class EmployeeController {
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(employee.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
-
+	
+	@RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
+		log.info("Input employee object: "+employee);
+		if (null != employee) {			
+			employeeService.update(employee);
+		} else {
+			//if (userService.isUserExist(user)) {
+	           // System.out.println("A User with name " + user.getName() + " already exist");
+	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+	        //}
+		}
+		
+		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
+		HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(employee.getId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.ACCEPTED);
+	}
+	
+	@RequestMapping(value = "/employee/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable long id) {
+		log.info("Input id value: "+id);
+		if (id !=  0) {			
+			employeeService.delete(id);
+		} else {
+			//if (userService.isUserExist(user)) {
+	           // System.out.println("A User with name " + user.getName() + " already exist");
+	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+	        //}
+		}
+		
+		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	}
+	/*
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
 	public ModelAndView update(@ModelAttribute("employeeMap") Employee employee) {
 		System.out.println(employee);
@@ -139,5 +175,5 @@ public class EmployeeController {
 		mailHandler.sendMail("Employee Update", "Employee Updated Successfully");
 		return model;
 	}
-
+	*/
 }

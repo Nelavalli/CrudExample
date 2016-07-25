@@ -6,21 +6,24 @@ import com.infosys.odcAccess.dto.Employee;
 
 public interface EmployeeService {
 	
-	Employee findById(long id);
-    
-	List<Employee> findByName(String name);
+	public Employee findById(long id);
 	
-	List<Employee> findByIdOrName(String idOrname);
+	public boolean isExist(long id);
+	
+	public List<Employee> findByName(String name);
+	
+	public List<Employee> findByName(String name, int firstResult, int maxResults);
+	
+	public List<Employee> findByIdOrName(String idOrname);
      
-    boolean saveEmployee(Employee employee);
+	public List<Employee> findByIdOrName(String idOrname, int firstResult, int maxResults);
+	
+    boolean add(Employee employee);
      
-    boolean updateUser(Employee employee);
+    boolean update(Employee employee);
      
-    boolean deleteEmployeeById(long id);
+    boolean delete(long id);
  
-    List<Employee> findAllEmployees(); 
+    public List<Employee> findAllEmployees(); 
      
-    boolean deleteAllEmployees();
-     
-    public boolean isEmployeeExist(Employee employee);
 }

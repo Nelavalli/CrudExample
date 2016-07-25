@@ -16,24 +16,70 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Autowired
 	private EmployeeDAO employeeDAO;
 
-	Employee findById(long id) {
+	@Override
+	public Employee findById(long id) {
+		return employeeDAO.getById(id);
 	}
     
-	List<Employee> findByName(String name){
+	@Override
+	public boolean isExist(long id) {
+		return employeeDAO.isExist(id);
 	}
 	
-	List<Employee> findByIdOrName(String idOrname);
+	@Override
+	public List<Employee> findByName(String name){
+		return employeeDAO.getByName(name, -1, -1);
+	}
+	
+	@Override
+	public List<Employee> findByName(String name, int firstResult, int maxResults){
+		return employeeDAO.getByName(name, firstResult, maxResults);
+	}
+	
+	@Override
+	public List<Employee> findByIdOrName(String idOrname) {
+		return employeeDAO.get(idOrname, -1, -1);
+	}
+	
+	@Override
+	public List<Employee> findByIdOrName(String idOrname, int firstResult, int maxResults) {
+		return employeeDAO.get(idOrname, firstResult, maxResults);
+	}
+	
+	@Override
+    public boolean add(Employee employee) {
+		try {
+			employeeDAO.add(employee);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
      
-    boolean saveEmployee(Employee employee);
+    public boolean update(Employee employee) {
+    	try {
+			employeeDAO.update(employee);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
      
-    boolean updateUser(Employee employee);
-     
-    boolean deleteEmployeeById(long id);
+    public boolean delete(long id) {
+    	try {
+			employeeDAO.delete(id);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
  
-    List<Employee> findAllEmployees(); 
-     
-    boolean deleteAllEmployees();
-     
-    public boolean isEmployeeExist(Employee employee);
-}
+    public List<Employee> findAllEmployees() {
+    	return employeeDAO.list(-1,-1);
+    }
+      
+    
 }

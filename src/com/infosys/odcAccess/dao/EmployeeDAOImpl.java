@@ -22,12 +22,28 @@ import com.infosys.odcAccess.dto.Employee;
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	private static final Logger log = LoggerFactory.getLogger(EmployeeDAOImpl.class);
-	 private SessionFactory sessionFactory;
-	 
-	    public EmployeeDAOImpl(SessionFactory sessionFactory) {
-	        this.sessionFactory = sessionFactory;
-	    }
 	
+	@Autowired
+	private SessionFactory sessionFactory;
+	 
+	
+    public boolean isExist(Long id) {
+    	Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery("select 1 from Employee where ID=:id");
+			
+			
+			List employeeList =query.setParameter("id", id).list();
+		    return employeeList.isEmpty() ? false: true;
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return false;		
+    }
+    
     @Override 	    
 	public void add(Employee item) {
 		Session session = sessionFactory.getCurrentSession();
