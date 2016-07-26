@@ -31,7 +31,7 @@
       <AppenderRef ref="RollingFile" level="trace"/>
     </Logger>
     
-    <Logger name="com.infosys" level="trace" additivity="false">
+    <Logger name="com.dataBytes" level="trace" additivity="false">
       <AppenderRef ref="STDOUT" level="info"/>    
       <AppenderRef ref="RollingFile" level="trace"/>
     </Logger>

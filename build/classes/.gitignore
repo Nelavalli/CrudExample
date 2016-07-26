@@ -1,4 +1,4 @@
 /com/
-/hibernate.cfg.xml
 /log4j2.xml
-/odcAccess.properties
+/prod-hibernate.cfg.xml
+/prod-odcAccess.properties

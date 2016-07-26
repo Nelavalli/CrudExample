@@ -1,0 +1,14 @@
+<div ng-controller="showCtrl">
+<div ng-if="employee.ReqStatus == 1">
+	<div ng-click="ShowHide()">{{employee.Name}}</div>
+	<div ng-hide="IsHidden">
+		<input type="checkbox" ng-model="employee.exam1">Test1 <input
+			type="checkbox" ng-model="employee.exam2">Test2 <input
+			type="checkbox" ng-model="employee.exam3">Test3 <input
+			type="checkbox" ng-model="employee.exam4">Policy1 <input
+			type="checkbox" ng-model="employee.exam5">Policy2
+		<textarea></textarea>
+		<button>submit</button>
+	</div>
+	</div>
+</div>

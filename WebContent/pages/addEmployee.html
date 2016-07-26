@@ -1,0 +1,48 @@
+<form name="emp-form" id="emp-form" novalidate>
+	<div>
+		<label>Employee Id</label><input type="text" name="empId"
+			ng-model="employee.empId" required>
+	</div>
+	<div>
+		<label>Employee Name</label> <input type="text" name="empName"
+			ng-model="employee.empName" required>
+	</div>
+	<div>
+		<label>App Area</label> <input type="text" name="appArea"
+			ng-model="employee.appArea">
+	</div>
+	<div>
+		<label>DSID</label> <input type="text" name="dsid"
+			ng-model="employee.dsid">
+	</div>
+	<div>
+		<label>PO / Badge End Date</label> <input type="date"
+			name="pobadgeEndDate" ng-model="employee.pobadgeEndDate">
+	</div>
+	<div>
+		<label>Email</label> <input type="email" name="email"
+			ng-model="employee.email" required>
+	</div>
+
+	<div>
+		<label>Cubicle Id</label> <input type="text" name="cubicleId"
+			ng-model="employee.cubicleId">
+	</div>
+	<div>
+		<label>Infy Manager Id</label> <input type="text" name="infyManagerId"
+			ng-model="employee.infyManagerId">
+	</div>
+	<div>
+		<label>Type Of Request</label> <input type="text" name="typeOfRequest"
+			ng-model="employee.typeOfRequest">
+	</div>
+
+
+	<div align="center">
+		<button ng-click="addEmployee()">Submit</button>
+		<button ng-click="cancelForm(form)">Cancel</button>
+	</div>
+</form>
+
+
+
