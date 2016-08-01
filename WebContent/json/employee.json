@@ -1,81 +1,81 @@
 [{
 	"Name": "Anusha",
 	"EmpId": "1596",
-	"Managerid": "54564",
-	"mobilenumber": "9874654964",
+	"ManagerEmail": "abcmuvva",
+	"EmpEmail": "cdekerra",
 	"status": "done",
 	"comment": "submitted",
 	"ReqStatus":"1"
 }, {
 	"Name": "sger",
 	"EmpId": "878",
-	"Managerid": "48636",
-	"mobilenumber": "94646468484",
+	"ManagerEmail": "ahhbc_muvva",
+	"EmpEmail": "cde_kdderra",
 	"status": "ok",
 	"comment": "not yet",
-	"ReqStatus":"0"
+	"ReqStatus":"1"
 }, {
 	"Name": "udgdf",
 	"EmpId": "147",
-	"Managerid": "852",
-	"mobilenumber": "369852147",
+	"ManagerEmail": "absec_muvva",
+	"EmpEmail": "cde_kejrra",
 	"status": "ok",
 	"comment": "not yet",
 	"ReqStatus":"1"
 }, {
 	"Name": "df",
 	"EmpId": "86365",
-	"Managerid": "237",
-	"mobilenumber": "25869536999",
+	"ManagerEmail": "e_fgh",
+	"EmpEmail": "cddfse_kerra",
 	"status": "notok",
 	"comment": "not yet",
 	"ReqStatus":"1"
 }, {
 	"Name": "vdfes",
 	"EmpId": "456",
-	"Managerid": "654",
-	"mobilenumber": "123654789",
+	"ManagerEmail": "abc_mwwuvva",
+	"EmpEmail": "cde_kerrsra",
 	"status": "notok",
 	"comment": "submitted",
-	"ReqStatus":"0"
+	"ReqStatus":"1"
 },{
-	"Name": "Anusroosha",
+	"Name": "Anuvcjsha",
 	"EmpId": "1596",
-	"Managerid": "54564",
-	"mobilenumber": "9874654964",
+	"ManagerEmail": "abc_mlojuvva",
+	"EmpEmail": "cddde_kerra",
 	"status": "done",
 	"comment": "submitted",
 	"ReqStatus":"1"
 }, {
-	"Name": "sgkycer",
+	"Name": "sgejgkr",
 	"EmpId": "878",
-	"Managerid": "48636",
-	"mobilenumber": "94646468484",
+	"ManagerEmail": "assbc_muvva",
+	"EmpEmail": "cde_kernhhra",
 	"status": "ok",
 	"comment": "not yet",
 	"ReqStatus":"0"
 }, {
-	"Name": "udgxggdf",
+	"Name": "udghgfdf",
 	"EmpId": "147",
-	"Managerid": "852",
-	"mobilenumber": "369852147",
+	"ManagerEmail": "dd_fge",
+	"EmpEmail": "cde_kerreda",
 	"status": "ok",
 	"comment": "not yet",
-	"ReqStatus":"1"
+	"ReqStatus":"0"
 }, {
-	"Name": "dfkol",
+	"Name": "df",
 	"EmpId": "86365",
-	"Managerid": "237",
-	"mobilenumber": "25869536999",
+	"ManagerEmail": "abc_muhvva",
+	"EmpEmail": "cde_kerfra",
 	"status": "notok",
 	"comment": "not yet",
-	"ReqStatus":"1"
+	"ReqStatus":"0"
 }, {
-	"Name": "grtyvdfes",
+	"Name": "jhgivdfes",
 	"EmpId": "456",
-	"Managerid": "654",
-	"mobilenumber": "123654789",
+	"ManagerEmail": "abdc_muvva",
+	"EmpEmail": "acde_kerra",
 	"status": "notok",
 	"comment": "submitted",
-	"ReqStatus":"0"
+	"ReqStatus":"1"
 }]

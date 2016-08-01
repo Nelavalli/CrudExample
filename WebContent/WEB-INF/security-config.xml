@@ -1,0 +1,35 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/security
+ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<http auto-config="true">
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/home" access="permitAll" />
+		<intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/dba**"
+			access="hasRole('ADMIN') and hasRole('DBA')" />
+		<form-login login-page="/login" username-parameter="ssoId"
+			password-parameter="password" />
+		<access-denied-handler error-page="/Access_Denied" />
+		<logout logout-url="/logout"  logout-success-url="/home" delete-cookies="JSESSIONID" />
+		<session-management invalid-session-url="/login.html" />
+		<csrf />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="customUserDetailsService">
+			<password-encoder  ref="passwordEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="customUserDetailsService"
+		class="com.dataBytes.service.CustomUserDetailsService" />
+
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" >
+		<beans:constructor-arg name="strength" value="11" />
+    </beans:bean>
+</beans:beans>

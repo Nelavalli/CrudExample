@@ -15,5 +15,10 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="test/lib"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF"/>
+	<classpathentry kind="lib" path="test/lib/hsqldb-2.3.4.jar"/>
+	<classpathentry kind="lib" path="test/lib/spring-jdbc-4.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="test/lib/mockito-all-1.10.19.jar"/>
+	<classpathentry kind="lib" path="test/lib/spring-test-mvc-1.0.0.M2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

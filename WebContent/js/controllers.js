@@ -39,6 +39,3 @@ index.controller('LoginCtrl', function($scope, $http,$window) {
 		};
 
 	});
-
-
-

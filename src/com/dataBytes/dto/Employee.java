@@ -47,29 +47,30 @@ public class Employee implements Serializable{
 	//@SequenceGenerator(name = "EMPLOYEE_SEQ", sequenceName = "EMPLOYEE_SEQ", allocationSize = 1, initialValue = 1)	
 	private Long id;
 	
-	@Getter @Setter @JsonProperty @Column (name="FIRSTNAME")
-	private String firstName;
+	@Getter @Setter @JsonProperty @Column (name="NAME", nullable = false, length = 100)
+	private String name;
 	
-	@Getter @Setter @JsonProperty @Column (name="MIDDLENAME")
-	private String middleName;
+	@Getter @Setter @JsonProperty @Column (name="APPAREA")
+	private String appArea;	
 	
-	@Getter @Setter @JsonProperty @Column (name="LASTNAME", nullable = false, length = 100)
-	private String lastName;
+	@Getter @Setter @JsonProperty @Column (name="DSID")
+	private String dsId;
 	
-	@Getter @Setter @JsonProperty @Column (name="SALUTATION")
-	private String salutation;	
+	@Temporal(TemporalType.DATE)
+	@Getter @Setter @Column (name="BADGEENDDATE")
+	private Date badgeEndDate;
+		
+	@Getter @Setter @JsonProperty @Column (name="EMAIL")
+	private String email;
 	
-	@Getter @Setter @JsonProperty @Column (name="LOGINNAME")
-	private String loginName;
+	@Getter @Setter @JsonProperty @Column (name="CUBICLEID")
+	private String cubicleId;	
 	
-	@Getter @Setter @JsonProperty @Column (name="LOGINPASSWORD")
-	private String loginPassword;
+	@Getter @Setter @JsonProperty @Column (name="MANAGERID")
+	private Boolean managerId;
 	
-	@Getter @Setter @JsonProperty @Column (name="PHONENUMBER")
-	private String phoneNumber;	
-	
-	@Getter @Setter @JsonProperty @Column (name="ADMINFLAG")
-	private Boolean adminFlag;
+	@Getter @Setter @JsonProperty @Column (name="REQUESTTYPE")
+	private Boolean requestType;
 	
 	/*
 	@OneToMany(cascade = CascadeType.ALL)
@@ -92,10 +93,11 @@ public class Employee implements Serializable{
 	         }
 	 )
 	 */
+	/*
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="employeeId") 
 	@Getter @Setter @JsonProperty
 	private List<EmployeeDevCenter> dcs;
-	
+	*/
 	
 	/*
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
@@ -137,9 +139,9 @@ public class Employee implements Serializable{
 	public String toString(){
 		try { 
 			StringBuffer sb = new StringBuffer();
-			sb.append("  id:"+id+"; firstName:"+firstName+";  middleName:"+middleName+";  lastName:"+lastName);
-			sb.append(";  salutation:"+salutation+";  loginName:"+loginName+";  loginPassword:"+loginPassword);
-			sb.append(";  phoneNumber:"+phoneNumber+";  adminFlag:"+adminFlag);
+			sb.append("  id:"+id+"; Employee Name:"+name+";  App Area:"+appArea+";  DSID:"+dsId);
+			sb.append("; PO / Badge End Date:"+badgeEndDate+";  Email:"+email+";  Cubicle Id:"+cubicleId);
+			sb.append(";  Infy Manager Id:"+managerId+";  Type Of Request:"+requestType);
 			log.debug(sb.toString());
 			return sb.toString();
 		} catch(Throwable t) {

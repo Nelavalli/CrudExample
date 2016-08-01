@@ -10,7 +10,6 @@ import com.dataBytes.dao.EmployeeDAO;
 import com.dataBytes.dto.Employee;
 
 @Service("employeeService")
-@Transactional
 public class EmployeeServiceImpl implements EmployeeService{
 
 	@Autowired

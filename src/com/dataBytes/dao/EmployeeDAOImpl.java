@@ -166,8 +166,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
-		}
-		session.getTransaction().commit();
+		}		
 		return items;
 	}
 

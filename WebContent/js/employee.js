@@ -1,4 +1,4 @@
-index.controller('guestController', function($scope, $http, $filter,$window) {
+ index.controller('guestController', function($scope, $http, $filter,$window) {
 		console.log("Entered into the guestcontroller loop");
 
 		/*
@@ -36,10 +36,8 @@ index.controller('guestController', function($scope, $http, $filter,$window) {
 			});
 
 		};
-		$scope.cancelForm=function(employee){
-			console.log($scope.employee);
-			$scope.employee={};
-			console.log($scope.employee);
+		$scope.cancelForm=function(){
+			$window.location.href = "#guest";
 		};
 		$scope.guestSearch = function() {
 			console.log("u entered into guestSearch method");
@@ -66,5 +64,3 @@ index.controller('guestController', function($scope, $http, $filter,$window) {
  		$scope.IsHidden = $scope.IsHidden ? false : true;
  	}
  });
-
-
