@@ -1,6 +1,6 @@
 /*DEVELOPMENT SETUP */
 
-//LOMBOK setup for getter and setters. lombok.jar is in lib folder so no need to copy or place in classpath
+//LOMBOK setup for getter and setters. lombok.jar is in WEB-INF/lib folder so no need to copy or place in classpath
 	Close your Eclipse IDE 
 	Double click on the lombok.jar
 	Specify the location of Eclipse
@@ -19,13 +19,13 @@ DELETE request to /api/user/ deletes all the users
 Set spring.profiles.active environment variable according to environment to load environment specific properties files. 
  
 	DEV for development. 
-		Properties files: DEV-odcAccess.properties
+		Properties files: DEV-crudExample.properties
 	
 	TEST for both Unit and Integration testing. 
-		Properties files: TEST-odcAccess.properties
+		Properties files: TEST-crudExample.properties
 	
-	PROD for production. 
-		Properties files : PROD-odcAccess.properties
+	PROD for production.
+		Properties files : PROD-crudExample.properties
 	
 	How to set the Environment variable:
 	Ex: For production configuration
@@ -36,4 +36,16 @@ Set spring.profiles.active environment variable according to environment to load
 	 	For *nix, add the following property in before calling server script.
 	 		export spring.profiles.active=PROD 
 
-	  
+
+/*HSQLDB configuration. 
+
+HSQLDB is both in-memory and file DB. We are using file DB. 
+Since it is file DB,Either application or standalone connectivity accepted, not both*/
+
+/*HSQL Standalone readonly connectivity (while application running)*/
+java -cp C:/Users/rnel1941/workspace/CrudExample/test/lib/hsqldb.jar org.hsqldb.util.DatabaseManagerSwing -driver org.hsqldb.jdbcDriver -url jdbc:hsqldb:file:C:/Users/rnel1941/odcAccess_db;shutdown=true;hsqldb.write_delay=false;readonly=true -user sa
+
+
+/* SPRING Security DB remember-me functionality. It needs database table to get and stored*/
+create table persistent_logins (username varchar(64) not null, series varchar(64) primary key, token varchar(64) not null, last_used timestamp not null)
+

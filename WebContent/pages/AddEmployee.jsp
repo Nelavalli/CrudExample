@@ -41,42 +41,42 @@
 				</tr>
 				<tr>
 					<th>firstName</th>
-					<td><form:input path="firstName" /></td>
+					<td><form:input path="name" /></td>
 
 				</tr>
 				<tr>
 					<th>middleName</th>
-					<td><form:input path="middleName" /></td>
+					<td><form:input path="appArea" /></td>
 
 				</tr>
 				<tr>
 					<th>lastName</th>
-					<td><form:input path="lastName" /></td>
+					<td><form:input path="dsId" /></td>
 
 				</tr>
 				<tr>
 					<th>salutation</th>
-					<td><form:input path="salutation" /></td>
+					<td><form:input path="badgeEndDate" /></td>
 
 				</tr>
 				<tr>
 					<th>loginName</th>
-					<td><form:input path="loginName" /></td>
+					<td><form:input path="email" /></td>
 
 				</tr>
 				<tr>
 					<th>loginPassword</th>
-					<td><form:password path="loginPassword" /></td>
+					<td><form:password path="cubicleId" /></td>
 
 				</tr>
 				<tr>
 					<th>phoneNumber</th>
-					<td><form:input path="phoneNumber" /></td>
+					<td><form:input path="managerId" /></td>
 
 				</tr>
 				<tr>
 					<th>adminFlag</th>
-					<td><form:input path="adminFlag" /></td>
+					<td><form:input path="requestType" /></td>
 
 				</tr>				
 				<tr>

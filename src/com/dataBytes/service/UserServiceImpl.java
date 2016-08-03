@@ -14,14 +14,12 @@ public class UserServiceImpl implements UserService{
  
     @Autowired
     private UserDao dao;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
  
     public User findById(int id) {
         return dao.findById(id);
     }
  
+    
     public User findBySso(String sso) {
         return dao.findBySSO(sso);
     }

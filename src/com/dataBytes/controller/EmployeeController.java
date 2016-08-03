@@ -97,21 +97,31 @@ public class EmployeeController {
 	}
 	
 	*/
-	@RequestMapping(value = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	@RequestMapping(value = "/admin/home")
+	public ModelAndView displayHomePage() {
+		log.debug("displayHomePage");
+		ModelAndView model = new ModelAndView("home");
+		List<Employee> employees = employeeService.findAllEmployees();
+		model.addObject("employees", employees);
+		return model;
+	}
+	
+	@RequestMapping(value = "/admin/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Employee> getEmployeesJson() {
 		log.debug("Entered into EmployeesJson");
 		List<Employee> employees = employeeService.findAllEmployees();
 		return employees;
 	}
 	
-	@RequestMapping(value = "/employee/{idOrName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/admin/employee/{idOrName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Employee> getEmployeesJson(@RequestParam(value = "idOrName", required = true) String idOrName) {
 		List<Employee> employeeList = employeeService.findByIdOrName(idOrName);
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		return employees;
 	}
 	
-	@RequestMapping(value = "/employee/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = {"/guest/employee/{id}","/admin/employee/{id}"}, method = RequestMethod.POST)
 	public ResponseEntity<Void> add(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
 		log.info("Input employee object: "+employee);
 		if (null != employee) {			
@@ -129,7 +139,7 @@ public class EmployeeController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/admin/employee/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
 		log.info("Input employee object: "+employee);
 		if (null != employee) {			
@@ -147,7 +157,7 @@ public class EmployeeController {
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/employee/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/admin/employee/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable long id) {
 		log.info("Input id value: "+id);
 		if (id !=  0) {			

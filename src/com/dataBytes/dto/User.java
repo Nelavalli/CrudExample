@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -23,6 +25,7 @@ import com.dataBytes.model.*;
 
 @Entity
 @Table(name = "APP_USER")
+@Audited
 public class User {
 
 	@Id

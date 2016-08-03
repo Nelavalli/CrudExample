@@ -153,7 +153,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<Employee> list(int firstResult, int maxResults) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		session.beginTransaction();
 		List<Employee> items = null;
 		try {
 			System.out.println("IN LIST");
@@ -164,8 +163,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			items = (List<Employee>)query.list();
 			
 		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
+			e.printStackTrace();			
 		}		
 		return items;
 	}

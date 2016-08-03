@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+
 import com.dataBytes.model.*;
 
 import lombok.Getter;
@@ -15,6 +18,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "USER_PROFILE")
+@Audited
 public class UserProfile {
 
 	@Getter

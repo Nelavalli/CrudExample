@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +30,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -67,48 +69,16 @@ public class Employee implements Serializable{
 	private String cubicleId;	
 	
 	@Getter @Setter @JsonProperty @Column (name="MANAGERID")
-	private Boolean managerId;
+	private String managerId;
 	
 	@Getter @Setter @JsonProperty @Column (name="REQUESTTYPE")
-	private Boolean requestType;
+	private String requestType;
 	
-	/*
-	@OneToMany(cascade = CascadeType.ALL)
-	 @JoinTable(
-			 name = "EMPLOYEE_DC",
-	         joinColumns = @JoinColumn(table="EMPLOYEE",name = "EMPLOYEE_ID", referencedColumnName="ID"),
-	         inverseJoinColumns = {
-	        		 @JoinColumn(table="EMPLOYEE_DC_PRIVILEGE", name = "DC_ID", referencedColumnName="DC_ID"),
-	         }
-	 )
-	@Getter @Setter @JsonProperty
-	private List<EmployeeDcPrivilege> employeeDcPrivileges;
-	*/
-	
-	/* @JoinTable(
-			 name = "EMPLOYEE_DC_X",
-	         joinColumns = @JoinColumn(table="EMPLOYEE",name = "EMPLOYEE_ID", referencedColumnName="EMPLOYEE_ID"),
-	         inverseJoinColumns = {
-	        		 @JoinColumn(table="EMPLOYE_DC", name = "EMPLOYEE_DC_ID", referencedColumnName="EMPLOYEE_DC_ID"),
-	         }
-	 )
-	 */
-	/*
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="employeeId") 
-	@Getter @Setter @JsonProperty
-	private List<EmployeeDevCenter> dcs;
-	*/
-	
-	/*
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
-	 @JoinTable(
-			 name = "EMPLOYEE_DC_PRIVILEGE",
-	         joinColumns = @JoinColumn(table="EMPLOYEE",name = "EMPLOYEE_ID", referencedColumnName="ID"),	        		 
-	         inverseJoinColumns = @JoinColumn(table="EMPLOYEE",name = "DC_ID")
-	 )
-	@Getter @Setter 
-	private Set<EmployeeDcPrivilege> employeeDcPrivileges;
-	*/
+	@Getter @Setter @JsonProperty 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "EMPLOYEE_PRIVILEGE", joinColumns = { @JoinColumn(name = "EMPLOYEE_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "EMPLOYEE_PRIVILEGE_ID") })
+	private Set<Privilege> privileges = new HashSet<Privilege>();
 	
 	@Getter @Setter @Column (name="DELETEFLAG")
 	private Boolean deleteFlag;
