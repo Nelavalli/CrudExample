@@ -108,29 +108,70 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "/admin/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Employee> getEmployeesJson() {
-		log.debug("Entered into EmployeesJson");
-		List<Employee> employees = employeeService.findAllEmployees();
-		return employees;
+	public ResponseEntity<?> getEmployeesJson() {
+		
+		List<Employee> employees;		
+		try {
+			employees = employeeService.findAllEmployees();
+			if (employees == null || employees.isEmpty()) {
+				return new ResponseEntity<List<Employee>>(employees,HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<Employee>>(employees,HttpStatus.OK);
+			
+		} catch(Exception e) {
+			log.error("Exception occured in employeeService calling", e);
+			String errorMessage = e + " <== error";
+	        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 	
 	@RequestMapping(value = "/admin/employee/{idOrName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Employee> getEmployeesJson(@RequestParam(value = "idOrName", required = true) String idOrName) {
-		List<Employee> employeeList = employeeService.findByIdOrName(idOrName);
-		ArrayList<Employee> employees = new ArrayList<Employee>();
-		return employees;
+	public ResponseEntity<?> getEmployeesJson(@PathVariable(value = "idOrName") String idOrName) {
+		List<Employee> employees;
+		
+		try {
+			employees = employeeService.findByIdOrName(idOrName);
+			if (employees == null || employees.isEmpty()) {
+				return new ResponseEntity<List<Employee>>(employees,HttpStatus.NO_CONTENT);
+			}			
+			
+		} catch(Exception e) {
+			log.error("Exception occured in employeeService calling for idOrName ="+idOrName, e);
+			String errorMessage = e + " <== error";
+	        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<List<Employee>>(employees,HttpStatus.OK);
+		
 	}
 	
 	@RequestMapping(value = {"/guest/employee/{id}","/admin/employee/{id}"}, method = RequestMethod.POST)
-	public ResponseEntity<Void> add(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
-		log.info("Input employee object: "+employee);
-		if (null != employee) {			
-			employeeService.add(employee);
+	public ResponseEntity<?> add(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
+		
+		if (null == employee) {			
+			
+			String msg = "Can not support request with empty employee object";
+			log.info(msg);			
+			return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
+			
 		} else {
-			//if (userService.isUserExist(user)) {
-	           // System.out.println("A User with name " + user.getName() + " already exist");
-	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-	        //}
+
+			if (employeeService.isExist(employee.getId())) {
+				String msg = "A Employee with Id " + employee.getId() + " already exist";
+				log.info(msg);
+				return new ResponseEntity<String>(msg,HttpStatus.CONFLICT);				
+			}
+		}
+		
+		try {
+			employeeService.add(employee);
+			
+		} catch (Exception e) {
+			log.error("Exception occured in employeeService calling for employe ="+employee, e);
+			String errorMessage = e + " <== error";
+	        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
 		
 		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
@@ -140,51 +181,67 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "/admin/employee/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {
-		log.info("Input employee object: "+employee);
-		if (null != employee) {			
-			employeeService.update(employee);
+	public ResponseEntity<?> update(@ModelAttribute("employee") Employee employee, UriComponentsBuilder ucBuilder) {		
+		
+		if (null == employee) {						
+
+			String msg = "Can not support request with empty employee object";
+			log.info(msg);			
+			return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
+			
 		} else {
-			//if (userService.isUserExist(user)) {
-	           // System.out.println("A User with name " + user.getName() + " already exist");
-	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-	        //}
+
+			if (!employeeService.isExist(employee.getId())) {
+				String msg = "A Employee with Id " + employee.getId() + " does not exist";
+				log.info(msg);
+				return new ResponseEntity<String>(msg,HttpStatus.NOT_FOUND);
+				
+			} 
+			
 		}
 		
-		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
+		try {
+			employeeService.update(employee);
+			
+		} catch (Exception e) {
+			log.error("Exception occured in employeeService calling for employe ="+employee, e);
+			String errorMessage = e + " <== error";
+	        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}		
+		
+		mailHandler.sendMail("Employee Update", "Employee updated Successfully");
 		HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(employee.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	
 	@RequestMapping(value = "/admin/employee/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable long id) {
-		log.info("Input id value: "+id);
-		if (id !=  0) {			
+	public ResponseEntity<?> delete(@PathVariable long id) {
+		
+		if (id ==  0) {	
+			String msg = "Can not support request with employee id is 0 or empty";
+			log.info(msg);	
+			return new ResponseEntity<String>( msg,HttpStatus.CONFLICT);
+		
+		} else if (!employeeService.isExist(id)) {
+				String msg = "A Employee with Id " + id+ " does not exist";
+				log.info(msg);
+				return new ResponseEntity<String>(msg,HttpStatus.NOT_FOUND);				
+		} 		
+		
+		try {
 			employeeService.delete(id);
-		} else {
-			//if (userService.isUserExist(user)) {
-	           // System.out.println("A User with name " + user.getName() + " already exist");
-	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-	        //}
+			
+		} catch (Exception e) {
+			log.error("Exception occured in employeeService calling for employe ID ="+id, e);
+			String errorMessage = e + " <== error";
+	        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
 		
-		mailHandler.sendMail("Employee Add", "Employee Added Successfully");
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		mailHandler.sendMail("Employee Delete", "Employee deleted Successfully");
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
-	/*
-	@RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
-	public ModelAndView update(@ModelAttribute("employeeMap") Employee employee) {
-		System.out.println(employee);
-		if (null != employee)
-			employeeDAO.update(employee);
-
-		ModelAndView model = new ModelAndView("AddEmployee");
-		model.addObject("employee", employee);
-		List<Employee> employeeList = employeeDAO.list(-1,-1);
-		model.addObject("employeeList", employeeList);
-		mailHandler.sendMail("Employee Update", "Employee Updated Successfully");
-		return model;
-	}
-	*/
+	
 }
