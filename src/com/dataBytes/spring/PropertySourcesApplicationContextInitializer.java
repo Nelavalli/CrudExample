@@ -18,7 +18,16 @@ public class PropertySourcesApplicationContextInitializer
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
-		String profile = System.getenv("spring.profiles.active").trim();
+		String profile = System.getenv("spring.profiles.active");
+		if (profile == null) {
+			RuntimeException e = new RuntimeException("Application Enviroment Configuration Error."
+					+ "Environment variable 'spring.profiles.active' not set properly ");
+			
+			log.error("Environment variable 'spring.profiles.active' not set properly. "
+					+ "Ex: For *nix, export spring.profiles.active=PROD . Refer README.txt for configuration",e);
+			throw e;
+		}
+		profile = profile.trim();
 		profile = profile.length() > 0 ? profile : System.getProperty("spring.profiles.active");
 		System.setProperty("spring.profiles.active", profile);
 		
