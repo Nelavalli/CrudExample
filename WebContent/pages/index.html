@@ -29,7 +29,7 @@
 
 
 <body ng-controller="indexcontroller">
-	<div id="header">
+	<div id="header" style="color: white">
 		<img src="../images/infyicon.png"
 			style="width: 100px; height: 50px; padding-left: 40px;">
 	</div>
@@ -40,16 +40,16 @@
 		</div>
 	</div>
 	<footer id="footer">
-		<span>infosys</span> <div align="center">Copyright &copy;<a
+		<span style="color: white">infosys</span> <span id="searchNdHome" style="color: white">Copyright &copy;<a
 			href="#copyright-popup" ng-click="copyright()">2016</a>Infosys
 			Limited.
-		</div>
+		</span>
 	</footer>
 	<script>
 		var index = angular.module('index', [ 'ngRoute', 'ngAnimate' ]);
 		index.config([ '$routeProvider', function($routeProvider) {
 			$routeProvider.when('/main', {
-				templateUrl : 'mainPage.html'
+				templateUrl : 'mainPage.jsp'
 			}).when('/admin', {
 				templateUrl : 'Login.html',
 				controller : 'LoginCtrl'
@@ -64,24 +64,26 @@
 				templateUrl : 'AdminDashboard.html',
 				controller : 'adminController'
 			}).
-			
+
 			otherwise({
 				redirectTo : '/main'
 			});
 		} ]);
-		index.controller('indexcontroller', function($scope,$window) {
-			$scope.copyright=function(){
-				$window.alert("copyright alert kjnkajsd dmjhfksdjbf kjfhsdkjfh kjhdkf kjhsdhf kjhfh kjfhhf khriwue kthih kfjhrihr kkrjhureh kjhfuri rhirh hgrihon ieruth fguerhire lwurhu rthuiren hureth ertiru oeyongih rkjtherhoelrknk eiurtherotr trithirthor ertretrutrotn ertuintleertoijewpogne r");
-			};
-			
-		});
+		index
+				.controller(
+						'indexcontroller',
+						function($scope, $window) {
+							$scope.copyright = function() {
+								$window
+										.alert("bution of this Program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.");
+							};
+
+						});
 	</script>
 	<script type="text/javascript" src="../js/controllers.js"></script>
 	<script type="text/javascript" src="../js/employee.js"></script>
 	<script type="text/javascript" src="../js/adminctrl.js"></script>
 	<script type="text/javascript" src="../js/mojillaDate.js"></script>
+
 </body>
 </html>
-
-
-

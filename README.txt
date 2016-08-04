@@ -7,13 +7,59 @@
 	click Install/Update button
 	Use your Eclipse IDE as usual 
 
-/*JSON 	URI request mappings*/
-GET request to /api/user/ returns a list of users
-GET request to /api/user/1 returns the user with ID 1
-POST request to /api/user/ with a user object as JSON creates a new user
-PUT request to /api/user/3 with a user object as JSON updates the user with ID 3
-DELETE request to /api/user/4 deletes the user with ID 4
-DELETE request to /api/user/ deletes all the users
+POST /login.do  --Login action URL
+	InputPage: /loginPage.do
+	ssoId
+	password
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	
+	RET: Success - /admin/home.do
+	     Fail - /loginPage.do?error=true
+
+POST /admin/logout.do  --Logout action URL
+  	 RET: Success - /loginPage.do?logout=true
+
+GET /admin/employees  -- To get all employees
+	RET: 204 - NO_CONTENT  --No data found
+		 500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     200 - OK -- fetched employees
+
+GET /admin/employee/{idOrName} --To get employees by id or name
+	RET: 204 - NO_CONTENT  --No data found
+		 500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     200 - OK -- fetched employees
+
+POST /guest/employee/{id} , /admin/employee/{id}  --To add Employee with employee id
+	RET: 400 - BAD_REQUEST -- Request is incorrect
+	     409 - CONFLICT  -- Employee with id already exist in DB
+	     500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     201 - CREATED --added successfully
+	
+
+PUT /admin/employee/{id}  --To update employee with employee id {id}
+	RET: 400 - BAD_REQUEST -- Request is incorrect
+	     404 - NOT_FOUND  -- Employee with id not found in DB
+	     500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     202 - ACCEPTED --Updated successfully
+
+DELETE /admin/employee/{id}  --To Delete employee with employee id {id}
+	RET: 400 - BAD_REQUEST -- Request is incorrect
+	     404 - NOT_FOUND  -- Employee with id not found in DB
+	     500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     202 - ACCEPTED --Deleted successfully
+	     
+GET /admin/{id}/file/{filename}  --To get a file {filename} for employee with id {id}	     
+	RET: 400 - BAD_REQUEST -- Request is incorrect
+		 204 - NO_CONTENT  --No data found
+		 500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     200 - OK -- fetched file {filename} for employee {id}
+		 
+DELETE /admin/{id}/file/{filename}  --To delete a file {filename} for employee with id {id}	     
+	RET: 400 - BAD_REQUEST -- Request is incorrect
+	     404 - NOT_FOUND  -- Employee with id not found in DB
+	     500 - INTERNAL_SERVER_ERROR  --Due to server issue update not happend
+	     202 - ACCEPTED --Deleted {filename} for employee {id}
+	   
 
 /*Environment specific information*/
 Set spring.profiles.active environment variable according to environment to load environment specific properties files. 

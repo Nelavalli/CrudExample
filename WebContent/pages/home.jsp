@@ -95,6 +95,20 @@
 			</c:forEach>
 		</table>
 	</div>
+	
+	<form method="POST" action="uploadMultipleFile.do" enctype="multipart/form-data">
+		File1 to upload: <input type="file" name="file">
+ 
+		Name1: <input type="text" name="name">
+ 
+ 
+		File2 to upload: <input type="file" name="file">
+ 
+		Name2: <input type="text" name="name">
+ 
 
+		<input type="submit" value="Upload"> Press here to upload the file!
+	</form>
+	
 </body>
 </html>

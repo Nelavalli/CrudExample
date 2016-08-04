@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.Audited;
 import org.slf4j.Logger;
@@ -89,6 +90,9 @@ public class Employee implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Getter @Setter @Column (name="LASTMODIFIED")
 	private Date lastModified;
+	
+	@Getter @Setter @JsonProperty @Transient
+	private Set<String> files;
 	
 	@Override
 	public boolean equals(Object employee){

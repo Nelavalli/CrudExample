@@ -17,7 +17,11 @@
 		<div id="test">
 			<ul id="tabview">
 				<li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}"
-					ng-click="onClickTab(tab)"><b style="color: red">{{count}}</b>{{tab.title}}</li>
+					ng-click="onClickTab(tab)"><span
+					ng-if="tab.title=='Pending requests'"><b style="color: red">{{countOne}}</b>{{tab.title}}</span><span
+					ng-if="tab.title=='incomplete compliances'"><b
+						style="color: red">{{countTwo}}</b>{{tab.title}}</span> <span
+					ng-if="tab.title=='Actions'">{{tab.title}}</span></li>
 			</ul>
 		</div>
 		<div id="mainView">
@@ -34,7 +38,7 @@
 	<script type="text/ng-template" id="one.tpl.html">
 		<div id="viewOne" >
 <ul>
-            <li  ng-repeat="employee in employeesList" >
+            <li  >
 			<div ng-include="'PendingRequestTemplate.html'"></div>
                  
              </li>
@@ -44,12 +48,10 @@
 
 	<script type="text/ng-template" id="two.tpl.html">
 		<div id="viewTwo">
-		<ul>
-            <li  ng-repeat="employee in employeesList" >
-			<div align = "center" ng-include="'incompleteCompliancesTemplate.html'"></div>
+		
+			<div ng-include="'incompleteCompliancesTemplate.html'"></div>
                  
-             </li>
-        </ul>
+        
 </div>
 		</script>
 
@@ -64,7 +66,3 @@
 		
 	</script>
 </div>
-
-
-
-
