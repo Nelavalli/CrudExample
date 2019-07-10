@@ -5,7 +5,7 @@
 	Double click on the lombok.jar
 	Specify the location of Eclipse
 	click Install/Update button
-	Use your Eclipse IDE as usual 
+	Use your Eclipse IDE as usual  rama-master-added
 
 POST /login.do  --Login action URL
 	InputPage: /loginPage.do
